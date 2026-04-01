@@ -27,6 +27,8 @@
       max-width: 1000px;
       margin: 20px auto;
       gap: 20px;
+      padding: 0 16px;
+      box-sizing: border-box;
     }
 
     main {
@@ -57,27 +59,61 @@
       margin: 20px 0;
       cursor: pointer;
       position: relative;
+      display: inline-block;
+      width: 100%;
     }
 
     .video img {
       width: 100%;
+      display: block;
       border-radius: 4px;
     }
 
-    .video::after {
-      content: "▶";
+    /* místo znaku ▶ použijeme CSS trojúhelník, aby se nezobrazoval otazník */
+    .play-button {
       position: absolute;
-      font-size: 40px;
-      color: white;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      text-shadow: 0 0 10px black;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.65);
+      pointer-events: none;
+    }
+
+    .play-button::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 54%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      border-left: 22px solid white;
+    }
+
+    .fake-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
     .fake-list li {
-      margin-bottom: 10px;
-      color: #333;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .fake-link {
+      color: #1a5fb4;
+      text-decoration: underline;
+      cursor: default;
+    }
+
+    .fake-link:hover {
+      color: #144a8a;
     }
 
     .april-overlay {
@@ -93,7 +129,94 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
     }
+
+#april-text {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+    @media (max-width: 800px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+.loader-box {
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+}
+
+
+.april-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.player {
+  width: 90%;
+  max-width: 800px;
+  height: 450px;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.player-top {
+  padding: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.player-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.big-play {
+  font-size: 80px;
+  opacity: 0.3;
+}
+
+.player-bottom {
+  padding: 10px;
+}
+
+.progress {
+  margin-top: 8px;
+  width: 100%;
+  height: 6px;
+  background: #444;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #ff0000;
+  transition: width 0.2s linear;
+}
+
   </style>
 </head>
 
@@ -104,46 +227,118 @@
 </header>
 
 <div class="container">
-
   <main>
-    <h1>🔥 Šokující odhalení ze světa deskovek</h1>
+    <h1>Jindrův příběh opět na stole!</h1>
     <div class="meta">Autor: Redakce | 1. dubna 2026</div>
 
     <p>
-      <!-- Sem si doplníš vlastní text článku -->
-      Interní zdroje z několika vydavatelství potvrdily, že nová hra byla stažena z distribuce kvůli nečekaným reakcím hráčů...
+      Fanoušci českých her se dělí na dvě velké skupiny. Jedna obdivuje stopu, kterou čeští vývojáři zanechávají ve světě digitálních her. Tam je dnes hlavní hvězdou firma Warhorse, dvou dílů jejich velkolepé středověké simulace Kingdom Come Deliverance se prodalo více než deset milionů kopií. 
+    </p>
+    <p>
+Nemalá skupina českých patriotů však nedá dopustit na CGE, vydavatelství deskových her, jehož vlajkové hry Krycí jména se prodalo ještě o polovinu více, a jehož tituly slaví obrovské úspěchy i v oblasti složitějších her, jako jsou například civilizační hra Through the Ages nebo vesmírný hit posledních let SETI. Tyto dvě hry nezmiňujeme náhodou, protože právě jejich autoři, Vlaada Chvátil a Tomáš Holek, oslovili Dana Vávru, který stojí za oběma díly veleúspěšné Kingdom Come, a společně vyvinuli deskovou podobu této hry.
+    </p>
+    <p>
+Jak spojení tří slavných designérů dopadlo? Co vznikne spojením Vávrova vypravěčského talentu s Chvátilovým a Holkovým citem pro figurky a kostky? Na to jsme se zeptali Petra Čáslavy, herního vývojáře a žurnalisty, který měl možnost zahrát si vzniklé dílo na jedné z utajovaných testovacích akcí CGE.
     </p>
 
-    <div class="video" onclick="showApril()">
-      <!-- SEM SI DÁŠ SVŮJ OBRÁZEK -->
+    <div class="video" onclick="toggleApril()">
       <img src="video-thumbnail.jpg" alt="Rozhovor">
+      <div class="play-button"></div>
     </div>
 
     <p>
-      Podle dostupných informací šlo o kombinaci mechanik, která vyvolávala překvapivě intenzivní reakce...
+      Zdá se tedy, že CGE navázalo tam, kde Boardcubator před lety neuspěl. A zdá se, že to bude plnohodnotné pokračování zrušeného projektu. A nám nezbývá než těšit se na řádnou dávku deskovového příběhu!
     </p>
+
+<p id="after-video" style="display:none;">
+  A my budeme s vámi mapovat další osudy této aprílové zprávy :).<br><br>
+--- A+V ---
+</p>
   </main>
 
   <aside>
     <h3>Další články</h3>
     <ul class="fake-list">
-      <li>Nová edice klasiky překvapila fanoušky</li>
-      <li>Top 10 her, které vás letos zklamou</li>
-      <li>Rozhovor s autorem kontroverzní hry</li>
-      <li>Největší herní přešlapy roku</li>
+      <li><span class="fake-link">Nová edice klasiky překvapila fanoušky</span></li>
+      <li><span class="fake-link">Top 10 her, které vás letos zklamou</span></li>
+      <li><span class="fake-link">Rozhovor s autorem kontroverzní hry</span></li>
+      <li><span class="fake-link">Největší herní přešlapy roku</span></li>
+      <li><span class="fake-link">Jak jsme naletěli na Apríla</span></li>
+      <li><span class="fake-link">Další kickstarter zrušen</span></li>
     </ul>
+     ... starší články ...
   </aside>
-
 </div>
 
 <div class="april-overlay" id="april">
-  Apríl 😄
+  <div class="player">
+    
+    <div class="player-top">
+      <span>KCD deskovka (exkluzivní rozhovor)</span>
+    </div>
+
+    <div class="player-center">
+      <div class="big-play">▶</div>
+    </div>
+
+    <div class="player-bottom">
+      <div id="april-text">Loading video… 0%</div>
+      <div class="progress">
+        <div id="progress-bar"></div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-  function showApril() {
-    document.getElementById("april").style.display = "flex";
-  }
+function toggleApril() {
+  const overlay = document.getElementById("april");
+  const text = document.getElementById("april-text");
+  const bar = document.getElementById("progress-bar");
+
+  overlay.style.display = "flex";
+
+  let progress = 0;
+
+  const interval = setInterval(() => {
+
+    if (progress < 70) {
+      progress += Math.floor(Math.random() * 5) + 5;
+
+    } else if (progress < 90) {
+      progress += Math.floor(Math.random() * 2) + 1;
+
+    } else if (progress < 97) {
+      progress += Math.random() < 0.3 ? 1 : 0;
+
+    } else {
+      progress = 100;
+    }
+
+    if (progress >= 100) {
+      progress = 100;
+      text.innerText = "Apríl 😄";
+      bar.style.width = "100%";
+      text.innerText = "Video removed for violating third party copyrights";
+      clearInterval(interval);
+
+      setTimeout(() => {
+        text.innerText = "Video removed for violating third party copyrights";
+	document.getElementById("after-video").style.display = "block";
+      }, 000);
+
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 4000);
+
+    } else {
+      bar.style.width = progress + "%";
+      text.innerText = "Loading video… " + progress + "%";
+    }
+
+  }, 300);
+}
 </script>
 
 </body>
