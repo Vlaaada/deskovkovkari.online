@@ -1,12 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Deskovkáři</title>
+  <title>Deskovkáři | Novinky ze světa deskových her</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1000px;
+      margin: 20px auto;
+      gap: 20px;
+    }
+
+    main {
+      background: white;
+      padding: 20px;
+      flex: 3;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    aside {
+      background: white;
+      padding: 20px;
+      flex: 1;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .meta {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .video {
+      margin: 20px 0;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video img {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .video::after {
+      content: "▶";
+      position: absolute;
+      font-size: 40px;
+      color: white;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 0 10px black;
+    }
+
+    .fake-list li {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .april-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      font-size: 40px;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>🔥 Šokující odhalení ze světa deskovek</h1>
-  <p>Interní zdroje potvrdily, že nová hra byla stažena z trhu...</p>
+
+<header>
+  Deskovkáři.cz
+</header>
+
+<div class="container">
+
+  <main>
+    <h1>🔥 Šokující odhalení ze světa deskovek</h1>
+    <div class="meta">Autor: Redakce | 1. dubna 2026</div>
+
+    <p>
+      <!-- Sem si doplníš vlastní text článku -->
+      Interní zdroje z několika vydavatelství potvrdily, že nová hra byla stažena z distribuce kvůli nečekaným reakcím hráčů...
+    </p>
+
+    <div class="video" onclick="showApril()">
+      <!-- SEM SI DÁŠ SVŮJ OBRÁZEK -->
+      <img src="video-thumbnail.jpg" alt="Rozhovor">
+    </div>
+
+    <p>
+      Podle dostupných informací šlo o kombinaci mechanik, která vyvolávala překvapivě intenzivní reakce...
+    </p>
+  </main>
+
+  <aside>
+    <h3>Další články</h3>
+    <ul class="fake-list">
+      <li>Nová edice klasiky překvapila fanoušky</li>
+      <li>Top 10 her, které vás letos zklamou</li>
+      <li>Rozhovor s autorem kontroverzní hry</li>
+      <li>Největší herní přešlapy roku</li>
+    </ul>
+  </aside>
+
+</div>
+
+<div class="april-overlay" id="april">
+  Apríl 😄
+</div>
+
+<script>
+  function showApril() {
+    document.getElementById("april").style.display = "flex";
+  }
+</script>
+
 </body>
 </html>
